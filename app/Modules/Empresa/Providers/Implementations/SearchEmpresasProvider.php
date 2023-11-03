@@ -91,7 +91,7 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
     {
         $firstResponse = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $this->data);
 
-        if ($firstResponse->failed()) throw new \Error('Page not be access');
+        if ($firstResponse->failed()) throw new \Error('Page not be access. Status: '.$firstResponse->status());
 
         $firstResponseEmpresas = $firstResponse->json();
 
