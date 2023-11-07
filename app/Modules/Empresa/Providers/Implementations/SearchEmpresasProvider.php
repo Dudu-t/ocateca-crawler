@@ -11,7 +11,7 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
 {
 
     private readonly array $data;
-    private $proxy = 'http://201.95.254.137:3128';
+    private $proxy = 'http://20.33.5.27:8888';
 
     public function __construct()
     {
@@ -61,7 +61,7 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
         $data['page'] = $page;
 
 
-        $response = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->withOptions(['proxy' => $this->proxy])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $data);
+        $response = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $data);
         if ($response->failed()) throw new \Error('Page not be access');
 
         $responseData = $response->json();
@@ -90,7 +90,7 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
      */
     public function getCountTotalPages(): int
     {
-        $firstResponse = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->withOptions(['proxy' => $this->proxy])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $this->data);
+        $firstResponse = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $this->data);
 
         if ($firstResponse->failed()) throw new \Error('Page not be access. Status: '.$firstResponse->status());
 
