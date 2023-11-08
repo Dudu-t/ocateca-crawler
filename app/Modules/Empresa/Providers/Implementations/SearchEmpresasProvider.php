@@ -132,11 +132,18 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
         $result = json_decode($json);
         $posCnpj = $result[3]->cnpj;
         $posVariables = $result[$posCnpj];
-        $posEmail = $posVariables->email ?? null;
-        $posTelefone = $result[$posVariables->telefones][0] ?? null;
 
+        $posTelefone = $result[$posVariables->telefones][0] ?? null;
         $telefone =  $result[$posTelefone] ?? null;
+
+        $posEmail = $posVariables->email ?? null;
         $email = $result[$posEmail] ?? null;
+
+        $getPosOwnerData = $result[$posVariables->quadro_societario][0] ?? null;
+        $realPosOwnerName = $result[$getPosOwnerData]->nome ?? null;
+
+        $ownerName = $result[$realPosOwnerName] ?? null;
+
 
         if ($telefone){
             $empresa->telefone = str_replace('-', '', $telefone);
@@ -144,9 +151,9 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
                 $empresa->telefone = '+55'.$empresa->telefone;
             }
         }
-        if ($email){
-            $empresa->email = $email;
-        }
+
+        $empresa->email = $email;
+        $empresa->owner_name = $ownerName;
 
         return $empresa;
     }

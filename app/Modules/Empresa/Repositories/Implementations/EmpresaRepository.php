@@ -62,7 +62,7 @@ class EmpresaRepository implements IEmpresaRepository
      */
     public function getEmpresasWithNullContact(): array
     {
-        $searchEmpresas = Empresa::where('telefone', null)->orWhere('email', null)->get();
+        $searchEmpresas = Empresa::where('telefone', null)->orWhere('email', null)->orWhere('owner_name', null)->get();
 
         /** @var EmpresaDTO[] $listEmpresas */
 

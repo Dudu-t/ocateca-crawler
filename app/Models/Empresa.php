@@ -29,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $telefone
  * @property string $email
  * @property string $url
+ * @property string $owner_name
  * */
 
 class Empresa extends Model
@@ -56,10 +57,6 @@ class Empresa extends Model
        'telefone',
        'email',
        'url',
+       'owner_name'
        ];
-
-    public function fromObject($object)
-    {
-        // TODO: Implement fromObject() method.
-    }
 }

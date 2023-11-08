@@ -28,6 +28,7 @@ class EmpresaDTO
     public ?string $telefone;
     public ?string $email;
     public ?string $url;
+    public ?string $owner_name;
 
 
     public function fromObject(object $object)
