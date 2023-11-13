@@ -2,15 +2,16 @@
 
 namespace App\Console\Commands;
 
+use App\Modules\Empresa\Services\SearchAllEmpresasByAllTimeService;
 use App\Modules\Empresa\Services\SearchEmpresasService;
 use Illuminate\Console\Command;
 
 class SearchEmpresasCommand extends Command
 {
-    private SearchEmpresasService $searchEmpresasService;
-    public function __construct(SearchEmpresasService $searchEmpresasService)
+    private SearchAllEmpresasByAllTimeService $searchAllEmpresasByAllTimeService;
+    public function __construct(SearchAllEmpresasByAllTimeService $searchAllEmpresasByAllTimeService)
     {
-        $this->searchEmpresasService = $searchEmpresasService;
+        $this->searchAllEmpresasByAllTimeService = $searchAllEmpresasByAllTimeService;
 
         parent::__construct();
     }
@@ -34,7 +35,7 @@ class SearchEmpresasCommand extends Command
     public function handle()
     {
         $this->info('INICIADA: Busca por empresas');
-        $this->searchEmpresasService->execute();
+        $this->searchAllEmpresasByAllTimeService->execute();
         $this->info('FINALIZADA: Busca por empresas ');
     }
 }

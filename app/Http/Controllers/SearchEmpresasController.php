@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Modules\Empresa\Services\SearchAllEmpresasByAllTimeService;
 use App\Modules\Empresa\Services\SearchEmpresasService;
 use Illuminate\Http\Request;
 
 class SearchEmpresasController extends Controller
 {
-    private SearchEmpresasService $searchEmpresasService;
-    public function __construct(SearchEmpresasService $searchEmpresasService)
+    private SearchAllEmpresasByAllTimeService $searchAllEmpresasByAllTimeService;
+    public function __construct(SearchAllEmpresasByAllTimeService $searchAllEmpresasByAllTimeService)
     {
-        $this->searchEmpresasService = $searchEmpresasService;
+        $this->searchAllEmpresasByAllTimeService = $searchAllEmpresasByAllTimeService;
     }
 
     public function handle(Request $request){
-        $this->searchEmpresasService->execute();
+        $this->searchAllEmpresasByAllTimeService->execute();
     }
 }

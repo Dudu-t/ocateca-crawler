@@ -55,10 +55,11 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
     /**
      * @inheritDoc
      */
-    public function getEmpresasByPage(int $page): array
+    public function getEmpresasByPage(int $page, \DateTime $inicioDataAbertura, \DateTime $fimDataAbertura): array
     {
         $data = $this->data;
         $data['page'] = $page;
+        $data['range_query']['data_abertura'] = ['gte'=> $inicioDataAbertura->format('Y-m-d'), 'lte'=> $fimDataAbertura->format('Y-m-d')];
 
 
         $response = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $data);
@@ -88,9 +89,13 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
     /**
      * @inheritDoc
      */
-    public function getCountTotalPages(): int
+    public function getCountTotalPages(\DateTime $inicioDataAbertura, \DateTime $fimDataAbertura): int
     {
-        $firstResponse = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $this->data);
+        $data = $this->data;
+
+        $data['range_query']['data_abertura'] = ['gte'=> $inicioDataAbertura->format('Y-m-d'), 'lte'=> $fimDataAbertura->format('Y-m-d')];
+
+        $firstResponse = Http::withHeaders(['user-agent' => 'insomnia/2023.5.8'])->post('https://api.casadosdados.com.br/v2/public/cnpj/search', $data);
 
         if ($firstResponse->failed()) throw new \Error('Page not be access. Status: '.$firstResponse->status());
 
@@ -99,6 +104,7 @@ class SearchEmpresasProvider implements \App\Modules\Empresa\Providers\Models\IS
         $founded = $firstResponseEmpresas['data']['count'];
 
         $maxPages =  ceil(($founded / 20));
+
 
         return $maxPages;
     }

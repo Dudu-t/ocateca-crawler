@@ -8,14 +8,18 @@ interface ISearchEmpresasProvider
 {
     /**
      * @param int $page
+     * @param \DateTime $inicioDataAbertura
+     * @param \DateTime $fimDataAbertura
      * @return EmpresaDTO[]
      */
-    public function getEmpresasByPage(int $page): array;
+    public function getEmpresasByPage(int $page, \DateTime $inicioDataAbertura, \DateTime $fimDataAbertura): array;
 
     /**
+     * @param \DateTime $inicioDataAbertura
+     * @param \DateTime $fimDataAbertura
      * @return int
-    */
-    public function getCountTotalPages(): int;
+     */
+    public function getCountTotalPages(\DateTime $inicioDataAbertura, \DateTime $fimDataAbertura): int;
 
     /**
      * @param string $razaoSocial
