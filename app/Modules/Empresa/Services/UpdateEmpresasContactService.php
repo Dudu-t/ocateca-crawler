@@ -42,7 +42,7 @@ class UpdateEmpresasContactService
             $remainingTimeString = gmdate('H:i:s', $remainingTime);
             $output->writeln("========== INFORMAÇÕES GERAIS =========\nUPDATING EMPRESAS \nTOTAL DE EMPRESAS: $totalEmpresas\nTEMPO TOTAL ESTIMADO: $expectedTimeString\n\n=============== PROGRESSO ===========", 4);
             $output->writeln("ATUALIZANDO CONTATO DA EMPRESA  $count/$totalEmpresas");
-            $output->writeln("PORCENTAGEM CONCLUIDA: ". (int)($count/$totalEmpresas). '%');
+            $output->writeln("PORCENTAGEM CONCLUIDA: ". floor($count*100/$totalEmpresas). '%');
             $output->writeln("TEMPO RESTANTE: $remainingTimeString");
             $updatedEmpresa = $this->searchEmpresasProvider->getEmpresaEmailAndTelefoneByUrl($empresa);
             $this->empresaRepository->update($updatedEmpresa);
